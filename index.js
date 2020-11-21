@@ -25,10 +25,13 @@ app.get('*', (req, res) => {
  */
 
 // CORS
-app.use(cors())
+const opcionesCors = {
+    origin: process.env.FRONTEND_URL
+};
+app.use(cors(opcionesCors));
 
 // leer y parseo valores del body
-app.use(express.json())
+app.use(express.json());
 
 
  // Rutas de la app
