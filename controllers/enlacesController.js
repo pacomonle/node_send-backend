@@ -49,7 +49,7 @@ exports.nuevoEnlace = async(req, res=response, next)=>{
         await enlace.save();
         res.json({
             ok: true,
-            msg:`${enlace.url} enlace creado correctamente`,
+            msg:`${enlace.url}`,
             enlace
         })
     } catch (error) {

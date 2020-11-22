@@ -10,7 +10,7 @@ const fs = require('fs');
 exports.subirArchivo = async(req, res = response, next) =>{
 
     const configuracionMulter = {
-        limit: { fileSize: req.usuario? 1024 * 1024 * 10 : 1000000 },  // 1 mega para usuarios sin cuenta
+        limits: { fileSize: req.usuario? 1024 * 1024 * 10 : 1024 * 1024  },  // 1 mega para usuarios sin cuenta
         storage: fileSotrage = multer.diskStorage({
             destination: (req, file, callback) =>{
                 callback(null, __dirname + '/../uploads') // el primer parametro es el error
