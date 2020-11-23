@@ -11,7 +11,13 @@ const upload = multer({dest: './uploads/'}); */
 router.post('/',
 auth,
 // upload.single('archivo'), // sinlge - solo un archivo
-archivosController.subirArchivo);
+archivosController.subirArchivo
+);
+
+router.get('/:archivo',
+archivosController.descargarArchivo,
+archivosController.eliminarArchivo
+);
 
 // No es necesario se le llama desde el router de enlaces ( se comunica con un next )
 /* router.delete('/:id',

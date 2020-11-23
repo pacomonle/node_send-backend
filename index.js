@@ -10,19 +10,8 @@ const app = express();
 // conectar a la Data Base
 conectarDB();
 
-
-
 // puerto de la app
 const port = process.env.PORT || 4000;
-
-/* 
-const www = process.env.WWW || './';
-app.use(express.static(www));
-console.log(`serving ${www}`);
-app.get('*', (req, res) => {
-    res.sendFile(`index.html`, { root: www });
-});
- */
 
 // CORS
 const opcionesCors = {
@@ -32,6 +21,9 @@ app.use(cors(opcionesCors));
 
 // leer y parseo valores del body
 app.use(express.json());
+
+// Habilitar carpeta publica
+app.use(express.static('uploads'));
 
 
  // Rutas de la app

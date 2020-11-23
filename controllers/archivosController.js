@@ -1,8 +1,9 @@
-const { response, application } = require('express');
+const { response } = require('express');
 const shortid = require('shortid');
 // subida de archivos
 const multer = require('multer');
 const fs = require('fs');
+const Enlace = require('../models/Enlace');
 
 
 
@@ -64,6 +65,38 @@ exports.eliminarArchivo = async(req, res = response) =>{
     } catch (error) {
         console.log(error);
     }
+}
+
+// descargar un archivo
+exports.descargarArchivo = async(req, res = response, next) =>{
+    console.log(req.params);
+    const { archivo } = req.params;
+    // obtener archivo
+    const enlace = await Enlace.findOne({ nombre: archivo });
+
+    const archivoDescarga = __dirname + '/../uploads/' + archivo
+
+    res.download(archivoDescarga);
+
+    // Eliminar el archivo y la entrada de la BD
+    // Si las descargas son iguales a 1 - Borrar la entrada y borrar el archivo
+    const { descargas, nombre } = enlace;
+
+    if(descargas === 1) {
+
+        // Eliminar el archivo 
+        req.archivo = nombre;
+        
+        // eliminar la entrada de la bd
+        await Enlace.findOneAndRemove(enlace.id);
+        next()
+    } else {
+         // si las descargas son > a 1 - Restar 1
+         enlace.descargas--;
+         await enlace.save();
+    }
+
+    
 }
 
 

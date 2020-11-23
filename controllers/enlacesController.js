@@ -83,26 +83,22 @@ exports.obtenerEnlace = async(req, res = response, next)=> {
        archivo: enlace.nombre
    })
 
+ 
+}
 
-   const {descargas, nombre} = enlace;
-    if(descargas === 1){
-        // si enlace.descargas = 1 - borrar entrada y borrar archivo
-        console.log('descargas a 1');
-
-        // 1 eliminar archivo
-        req.archivo = nombre;
-     
-
-        // 2 eliminar entrada data base
-        await Enlace.findOneAndRemove({url : req.params.url});
-
-        next();
-    }else{
-        // si enlace.descargas > 1 - restar uno a la cuenta de enlace.descargas
-        enlace.descargas--;
-        enlace.save();
-        console.log('descargas > 1');
+// listar enlaces
+exports.listarEnlaces = async(req, res = response, next) => {
+    try {
+        const enlaces = await Enlace.find({}).select('url -_id');
+        res.json({
+            ok: true,
+            msg:'Listado de enlaces',
+            enlaces
+        })
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg:'no se ha podido crear el listado de enlaces, hable con el administrador'
+        })
     }
-
-
 }
