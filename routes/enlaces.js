@@ -14,6 +14,7 @@ enlacesController.nuevoEnlace
 )
 
 router.get('/:url',
+enlacesController.tienePassword,
 enlacesController.obtenerEnlace
 )
 
@@ -21,5 +22,11 @@ enlacesController.obtenerEnlace
 router.get('/',
 enlacesController.listarEnlaces
 )
+
+// verificar password
+router.post('/:url', 
+    enlacesController.verificarPassword,
+    enlacesController.obtenerEnlace
+);
 
 module.exports = router;
